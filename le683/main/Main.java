@@ -9,6 +9,8 @@ public class Main {
 	private static IRCbot683 bot;
 	private static Scanner keybIn;
 	
+	public static final String chnl="#Adventures-game";
+	
 	public static void main(String[] args) {
 		bot = new IRCbot683();
 		bot.setVerbose(true);
@@ -17,20 +19,21 @@ public class Main {
 		
 		try {
 			bot.connect("irc.esper.net");
-			bot.joinChannel("#Adventures-game");
-			
+			bot.joinChannel(Main.chnl);
 			String lnIn="";
 			while(bot.isConnected()){
-				System.out.print(lnIn + System.lineSeparator());
-				if(lnIn != null){
+				lnIn = keybIn.nextLine();
+				//System.out.print(lnIn + System.lineSeparator());
+				if(lnIn != null && lnIn.length()>0){
 					if(lnIn.equalsIgnoreCase("!exit")){
 						bot.quitServer("Bot Stopped!");
 						bot.dispose();
 						break;
 					}else{
-						bot.sendMessage("#Adventures-game", lnIn);
+						bot.sendMessage(Main.chnl, lnIn);
 					}
 				}
+				lnIn=null;
 			}
 			System.out.println("Stopping!");
 		} catch (IOException | IrcException e) {
