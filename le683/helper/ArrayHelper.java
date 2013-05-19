@@ -25,6 +25,21 @@ public class ArrayHelper {
 		return false;
 	}
 	
+	/**Converts a list(separated with a space) to array*/
+	public static String[] parseArray(String line){
+		String[] retStrings = new String[0];
+		String nLine="";
+		for(int i=0;i<line.length(); i++){
+			if(Character.toString(line.charAt(i)).equals(" ")){
+				retStrings = ArrayHelper.addToList(nLine, retStrings);
+				nLine="";
+			}else{
+				nLine = nLine.concat(Character.toString(line.charAt(i)));
+			}
+		}
+		return retStrings;
+	}
+	
 	public static String[] removeFromList(String object, String[] array){
 		String[] ret = null;
 		int remIndex = -1;

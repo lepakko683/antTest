@@ -2,24 +2,57 @@ package le683.customTypes;
 
 import java.util.ArrayList;
 
+import le683.helper.ArrayHelper;
+
 public class VoteHandler {
 	private ArrayList<Vote> votes;
+	
+	private String[] presets;
 	
 	public VoteHandler(){
 		votes = new ArrayList<Vote>();
 	}
 	
+	public void setPresets(String[] sets){
+		this.presets=sets;
+	}
+	
+	public String[] getPresets(){
+		return this.presets;
+	}
+	
+	public boolean isPresetted(){
+		if(presets != null){
+			return true;
+		}
+		return false;
+	}
+	
 	public void addVote(Vote v){
-		boolean voted = false;
-		for(Vote q : votes){
-			if(q.getUser().equals(v.getUser())){
-				voted=true;
-				votes.set(votes.indexOf(q), v);
+		
+		boolean tryAdd=false;
+		
+		if(isPresetted()){
+			
+			if(ArrayHelper.isOnList(v.getVote(), presets)){
+				tryAdd=true;
+			}
+		}else{
+			tryAdd=true;
+		}
+		if(tryAdd){
+			boolean voted = false;
+			for(Vote q : votes){
+				if(q.getUser().equals(v.getUser())){
+					voted=true;
+					votes.set(votes.indexOf(q), v);
+				}
+			}
+			if(!voted){
+				votes.add(v);
 			}
 		}
-		if(!voted){
-			votes.add(v);
-		}
+		
 	}
 	
 	/**Remember to stop vote before executing this!*/
